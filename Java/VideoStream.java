@@ -1,4 +1,4 @@
-//VideoStream
+package Java;//VideoStream
 
 import java.io.*;
 

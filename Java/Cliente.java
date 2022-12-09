@@ -1,4 +1,4 @@
-/* ------------------
+package Java;/* ------------------
    Cliente
    usage: java Cliente
    adaptado dos originais pela equipa docente de ESR (nenhumas garantias)
@@ -40,6 +40,10 @@ public class Cliente {
   //--------------------------
   //Constructor
   //--------------------------
+
+  public Cliente(InetAddress ipserver) throws SocketException {
+
+  }
   public Cliente() {
 
     //build GUI

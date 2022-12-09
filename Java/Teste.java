@@ -1,4 +1,4 @@
-/* ------------------
+package Java;/* ------------------
    Teste
    usage: java Teste [Video file requested]
    adaptado dos originais pela equipa docente de ESR (nenhumas garantias)

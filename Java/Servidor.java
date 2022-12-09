@@ -1,4 +1,4 @@
-/* ------------------
+package Java;/* ------------------
    Servidor
    usage: java Servidor [Video file]
    adaptado dos originais pela equipa docente de ESR (nenhumas garantias)
@@ -10,11 +10,18 @@ import java.net.*;
 import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.Timer;
 
 
 public class Servidor extends JFrame implements ActionListener {
+
+    //Para guardar informção do ficheiro de configurações
+    private Map<InetAddress, List<InetAddress>> configFile; //ip, <ips dos vizinhos>
+
+    private InetAddress ip;
+
 
   //GUI:
   //----------------
@@ -43,7 +50,18 @@ public class Servidor extends JFrame implements ActionListener {
   //--------------------------
   //Constructor
   //--------------------------
+
+/*
+  public Servidor() throws IOException {
+
+      parser("../configFIle.txt");
+
+
+  }*/
+
   public Servidor() {
+
+
     //init Frame
     super("Servidor");
 
@@ -81,9 +99,11 @@ public class Servidor extends JFrame implements ActionListener {
     sTimer.start();
   }
 
+
+
   //------------------------------------
-  //main
-  //------------------------------------
+  //main (stream)
+  //-----------------------------------
   public static void main(String argv[]) throws Exception
   {
     //get video filename to request:
@@ -153,6 +173,42 @@ public class Servidor extends JFrame implements ActionListener {
 	//if we have reached the end of the video file, stop the timer
 	sTimer.stop();
       }
+  }
+
+  // Parser
+
+  public void parser(String path) throws IOException {
+
+      BufferedReader reader = new BufferedReader(new FileReader(path));
+      String line = reader.readLine();
+
+      this.configFile = new HashMap<>();
+
+      while (line!= null){
+          String[] partes = line.split(":");
+          String[] ips = partes[1].split(";");
+
+          String[] ipnodo = partes[0].split(",");
+          InetAddress inetnodo = InetAddress.getByName(ipnodo[1]);
+
+
+          List<InetAddress> lista = new ArrayList<>();
+
+          for (String nomeip : ips){
+
+              String[] partes2 = nomeip.split(",");
+
+              InetAddress inetvizinho = InetAddress.getByName(partes2[1]);
+
+              lista.add(inetvizinho);
+
+          }
+
+          this.configFile.put(inetnodo,lista);
+      }
+
+      reader.close();
+
   }
 
 }//end of Class Servidor
